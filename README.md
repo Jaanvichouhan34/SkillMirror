@@ -1,64 +1,209 @@
 # SkillMirror 🪞
 
-**SkillMirror** is an AI-powered Student Performance Evaluator designed to bridge the gap between perceived competence and actual technical performance. Built with a focus on precision diagnostics, it helps students identify conceptual blind spots and prepare for placement season with data-driven insights.
+<div align="center">
+  <img src="https://github.com/Jaanvichouhan34/SkillMirror/raw/main/public/preview.png" alt="SkillMirror Preview" width="800"/>
+</div>
 
-[**🚀 Live Demo**](https://skill-mirror-gray.vercel.app)
+**SkillMirror** is an AI-powered Student Performance Evaluator that bridges the gap between **perceived competence** and **actual technical skills**. With adaptive assessments, structured learning paths, and gamified progress tracking, it helps CS students identify blind spots and prepare for top-tier placements.
 
-![SkillMirror Preview](https://github.com/Jaanvichouhan34/SkillMirror/raw/main/public/preview.png)
+[**🚀 Live Demo**](https://skill-mirror-gray.vercel.app) | [**📱 Responsive Demo**](https://skill-mirror-gray.vercel.app) | [**📊 Analytics Dashboard**](#features)
 
-## 🚀 Key Features
+---
 
-- **AI Diagnostic Engine**: Advanced assessment logic that finds exactly "why" an answer is wrong, not just identifying the error.
-- **Adaptive Assessments**: Dynamic question leveling using Item Response Theory (IRT) patterns.
-- **Perception Gap Analysis**: Measures the delta between student confidence and real-world performance.
-- **Achievement System**: Gamified learning with 70+ unique badges and XP-based leveling.
-- **Interactive Playground**: Code execution simulation for JS, Python, and C++ for hands-on practice.
-- **Dynamic Themes**: Fully responsive design with glassmorphism, supporting both a sleek Dark Mode and a crisp Light Mode.
+## ✨ Features Overview
 
-## 🛠️ Tech Stack
+<div align="center">
+  
+| 🎯 **Assessment Engine** | 📚 **Learning Paths** | 🏆 **Gamification** |
+|---|---|---|
+| 6 domains (DSA, ML, Web Dev, DBMS, OS, Networks) | 7 structured paths (Python, JS, C++, Web Dev, SQL, Java, C Systems) | 20+ achievement badges |
+| 10 progressive levels per domain (600+ questions) | 120+ modules with theory + code + quizzes | XP system & level progression |
+| 80% pass threshold with detailed explanations | Interactive code playground | Daily streaks & leaderboards |
+| Perception Gap Analysis | Hands-on coding challenges | Skill diagnostic reports |
 
-- **Frontend**: React 18, Vite
-- **Styling**: Tailwind CSS, Framer Motion (Animations)
-- **Icons**: Lucide React
-- **State Management**: React Context API & `localStorage` Persistence
-- **Curriculum**: Custom Data-driven modules for DSA, Web Dev, Python, JS, and C++.
+</div>
 
-## 🏁 Getting Started
+---
+
+## 🎨 Premium User Experience
+🌌 Deep Space Dark Theme (#04050a) + Light Mode Toggle
+✨ Glassmorphism Cards & Custom Cursor Animations
+🎵 Ambient Music Player with Equalizer
+⚡ Framer Motion Smooth Transitions
+📱 Fully Responsive + Mobile-First Design
+
+text
+
+---
+
+## 🛠️ Modern Tech Stack
+
+```mermaid
+graph TB
+    A[React 18 + Vite] --> B[Tailwind CSS]
+    A --> C[Framer Motion]
+    A --> D[React Context API]
+    B --> E[Lucide React Icons]
+    D --> F[localStorage Persistence]
+    A --> G[React Router]
+    G --> H[Dynamic Routes]
+```
+
+| **Category** | **Technologies** |
+|--------------|------------------|
+| **Frontend** | React 18, Vite, React Router |
+| **Styling** | Tailwind CSS, Glassmorphism |
+| **Animations** | Framer Motion, CSS Custom Properties |
+| **Icons** | Lucide React |
+| **State** | Context API, localStorage |
+| **Audio** | Web Audio API, Custom MP3 |
+| **Email** | EmailJS Integration |
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
+```bash
+Node.js 16+ | npm/yarn | Code Editor (VS Code recommended)
+```
 
-- Node.js (v16.x or higher)
-- npm or yarn
+### Quick Setup
+```bash
+# Clone & Install
+git clone https://github.com/Jaanvichouhan34/SkillMirror.git
+cd SkillMirror
+npm install
 
-### Installation
+# Development
+npm run dev
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Jaanvichouhan34/SkillMirror.git
-   cd SkillMirror
-   ```
+# Production Build
+npm run build
+npm run preview
+```
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+---
 
-3. **Start the development server**
-   ```bash
-   npm run dev
-   ```
+## 📱 Pages & Features
+📍 Routes:
+/home → Hero + Features + Testimonials
+/assessment → Domain & Level Selection
+/quiz → Adaptive 10-MCQ Assessment
+/learn → 7 Learning Paths Dashboard
+/profile → Skill Diagnostics + Progress
+/contact → EmailJS Form Integration
+/help → FAQ Knowledge Base
 
-4. **Build for production**
-   ```bash
-   npm run build
-   ```
+text
 
-## 👤 Credits
+---
 
-Developed with ❤️ by **Jaanvi Chouhan**.
-- **GitHub**: [@Jaanvichouhan34](https://github.com/Jaanvichouhan34)
-- **LinkedIn**: [Jaanvi Chouhan](https://www.linkedin.com/in/jaanvi-chouhan)
+## 🏆 Achievement System
+
+| **Badge** | **Requirement** | **XP Bonus** |
+|-----------|-----------------|--------------|
+| 🌱 Curious Mind | Complete 10 lessons | +100 XP |
+| 🐍 Python Master | Finish Python path | +500 XP |
+| 🎯 DSA Champion | Complete all DSA levels | +1000 XP |
+| 🔥 On Fire | 7-day streak | +250 XP |
+| 👑 Elite Coder | Reach 5000 XP | +2000 XP |
+
+---
+
+## 📈 SkillMirror in Action
+
+<div align="center">
+  <img src="https://github.com/Jaanvichouhan34/SkillMirror/raw/main/public/preview.png" alt="Dashboard Preview" width="100%"/>
+  <br><br>
+  <img src="https://github.com/Jaanvichouhan34/SkillMirror/raw/main/public/learn-preview.png" alt="Learning Paths" width="100%"/>
+</div>
+
+---
+
+## 🎯 Perfect For
+
+- **Students**: Placement preparation with real skill diagnostics
+- **Educators**: Track student progress across 6 domains
+- **Developers**: Showcase modern React + Tailwind portfolio project
+- **Teams**: Internal skill assessment & training platform
+
+---
+
+## 👨‍💻 Project Structure
+SkillMirror/
+├── src/
+│ ├── components/layout/ # Navbar, Footer, Layout
+│ ├── pages/assessment/ # Quiz system
+│ ├── pages/learn/ # Learning paths
+│ ├── context/ # Theme, Auth, Music
+│ ├── data/ # Questions + Learning content
+│ └── utils/ # Progress & XP managers
+├── public/ # Assets & Preview images
+├── tailwind.config.js # Custom theme config
+└── package.json # Dependencies
+
+text
+
+---
+
+## 📊 Resume Highlights
+✅ 600+ Unique Assessment Questions
+✅ 120+ Learning Modules
+✅ Full Gamification System (XP, Badges, Streaks)
+✅ Glassmorphism UI with Custom Animations
+✅ Theme Toggle (Dark/Light/System)
+✅ Mobile-First Responsive Design
+✅ EmailJS Contact Integration
+✅ localStorage Persistence
+
+text
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open Pull Request
+
+---
+
+## 👤 About the Creator
+
+<div align="center">
+
+**Jaanvi Chouhan**  
+Full-Stack Developer | UI/UX Designer | Open Source Enthusiast
+
+[![GitHub](https://img.shields.io/badge/GitHub-@Jaanvichouhan34-181717?style=flat&logo=github)](https://github.com/Jaanvichouhan34)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Jaanvi%20Chouhan-0077B5?style=flat&logo=linkedin)](https://linkedin.com/in/jaanvi-chouhan)
+[![Instagram](https://img.shields.io/badge/Instagram-@jaanvi_chouhan18-E4405F?style=flat&logo=instagram)](https://instagram.com/jaanvi_chouhan18)
+[![Email](https://img.shields.io/badge/Email-jaanvichouhan18805@gmail.com-D14836?style=flat&logo=gmail)](mailto:jaanvichouhan18805@gmail.com)
+
+</div>
+
+---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is **MIT Licensed** 🆓. See [LICENSE](LICENSE) for details.
+
+---
+
+<div align="center">
+⭐ Star this repo if you found it helpful!
+🙌 Contributions welcome via Pull Requests
+🐛 Found a bug? Open an Issue!
+
+text
+
+**Built with ❤️ for the developer community**
+
+</div>
+
+---
+
+**#SkillMirror #React #Tailwind #PlacementPrep #EdTech**
