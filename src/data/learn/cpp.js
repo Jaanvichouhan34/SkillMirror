@@ -6,231 +6,65 @@ export const cppCourse = {
   modules: [
     {
       id: 'cpp_m1',
-      title: 'Programming Fundamentals in C++',
+      title: '1: Modern C++ Basics',
       xpReward: 100,
       lessons: [
         {
           id: 'cpp_m1_l1',
-          title: 'Hello Modern C++',
+          title: 'Hello Machine',
           duration: '10 min',
           content: [
-            { type: 'theory', text: 'C++ is a high-performance compiled language that offers lower-level memory management and high-level abstractions like classes and templates.' },
-            { type: 'code', language: 'cpp', label: 'C++ Hello', code: '#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Elite C++ Activated!" << endl;\n    return 0;\n}' }
+            { type: 'theory', text: 'C++ is a high-performance compiled language that offers both low-level memory control and high-level abstractions.' },
+            { type: 'code', language: 'cpp', code: '#include <iostream>\nusing namespace std;\n\nint main() {\n  cout << "Engine Start..." << endl;\n  return 0;\n}' },
+            { type: 'note', text: 'Every C++ program must have a main() function as its entry point.' },
+            { type: 'practice', title: 'Hello C++', problems: ['Print your favorite quote.', 'Declare int age = 20 and print it.'] }
           ]
         }
       ]
     },
     {
       id: 'cpp_m2',
-      title: 'Control Flow & Vectors',
+      title: '2: Data Types & Ops',
       xpReward: 100,
       lessons: [
         {
           id: 'cpp_m2_l1',
-          title: 'Loops and Dynamic Arrays',
+          title: 'Memory & Types',
           duration: '12 min',
           content: [
-            { type: 'theory', text: 'Use vectors instead of C-style arrays for dynamic sizing and better safety.' },
-            { type: 'code', language: 'cpp', code: 'vector<int> nums = {1, 2, 3};\nfor(int n : nums) cout << n;' }
+            { type: 'theory', text: 'C++ is strongly typed. Common types: int, float, double, char, bool, and string.' },
+            { type: 'code', language: 'cpp', code: 'int x = 5;\ndouble y = 1.5;\nbool status = true;\nstring msg = "Active";' }
           ]
         }
       ]
     },
     {
       id: 'cpp_m3',
-      title: 'Functions & Recursion',
+      title: '3: Control Flow',
       xpReward: 120,
       lessons: [
         {
           id: 'cpp_m3_l1',
-          title: 'Function Overloading',
+          title: 'Conditions & Loops',
           duration: '15 min',
           content: [
-            { type: 'theory', text: 'C++ allows you to define multiple functions with the same name if they have different parameters.' }
+            { type: 'theory', text: 'C++ uses if, switch, for, and while for logical flow.' },
+            { type: 'code', language: 'cpp', code: 'for(int i=0; i<5; i++) {\n  if(i % 2 != 0) cout << i << " ";\n}' }
           ]
         }
       ]
     },
-    {
-      id: 'cpp_m4',
-      title: 'Arrays & Advanced Strings',
-      xpReward: 120,
-      lessons: [
-        {
-          id: 'cpp_m4_l1',
-          title: 'std::string Power',
-          duration: '15 min',
-          content: [
-            { type: 'theory', text: 'The C++ String class provides powerful manipulation methods that C-strings lack.' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'cpp_m5',
-      title: 'Data Structures: Stack & Queue',
-      xpReward: 150,
-      lessons: [
-        {
-          id: 'cpp_m5_l1',
-          title: 'STL Containers',
-          duration: '20 min',
-          content: [
-            { type: 'theory', text: 'Master stack and queue implementations using the Standard Template Library (STL).' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'cpp_m6',
-      title: 'Search & Sort Algorithms',
-      xpReward: 180,
-      lessons: [
-        {
-          id: 'cpp_m6_l1',
-          title: 'Big-O & Efficiency',
-          duration: '20 min',
-          content: [
-            { type: 'theory', text: 'Analyze the complexity of sorting algorithms and implement them in C++.' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'cpp_m7',
-      title: 'Object-Oriented C++ (OOP)',
-      xpReward: 200,
-      lessons: [
-        {
-          id: 'cpp_m7_l1',
-          title: 'Constructors & Destructors',
-          duration: '20 min',
-          content: [
-            { type: 'theory', text: 'Classes in C++ manage resources using constructors and automatically clean up with destructors.' },
-            { type: 'code', language: 'cpp', code: 'class MyClass {\n  MyClass() { cout << "Object Created"; }\n};' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'cpp_m8',
-      title: 'Pointers & Memory Control',
-      xpReward: 250,
-      lessons: [
-        {
-          id: 'cpp_m8_l1',
-          title: 'Raw Pointers & References',
-          duration: '20 min',
-          content: [
-            { type: 'theory', text: 'Manage memory addresses directly for maximum performance control.' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'cpp_m9',
-      title: 'Dynamic Memory (new/delete)',
-      xpReward: 200,
-      lessons: [
-        {
-          id: 'cpp_m9_l1',
-          title: 'Heap Allocation',
-          duration: '20 min',
-          content: [
-            { type: 'theory', text: 'Avoid stack overflow by allocating large objects on the heap using new.' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'cpp_m10',
-      title: 'Templates & Generic Programming',
-      xpReward: 200,
-      lessons: [
-        {
-          id: 'cpp_m10_l1',
-          title: 'Function & Class Templates',
-          duration: '20 min',
-          content: [
-            { type: 'theory', text: 'Write code that works with any data type using templates.' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'cpp_m11',
-      title: 'Exception Handling in C++',
-      xpReward: 150,
-      lessons: [
-        {
-          id: 'cpp_m11_l1',
-          title: 'Try, Catch, Throw',
-          duration: '15 min',
-          content: [
-            { type: 'theory', text: 'Modern C++ uses exceptions to handle error conditions in a structured way.' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'cpp_m12',
-      title: 'Standard Template Library (STL)',
-      xpReward: 250,
-      lessons: [
-        {
-          id: 'cpp_m12_l1',
-          title: 'Iterators, Algorithms, Functors',
-          duration: '25 min',
-          content: [
-            { type: 'theory', text: 'STL is the backbone of professional C++ development, providing high-efficiency tools.' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'cpp_m13',
-      title: 'File Streams (fstream)',
-      xpReward: 180,
-      lessons: [
-        {
-          id: 'cpp_m13_l1',
-          title: 'Disk I/O in C++',
-          duration: '15 min',
-          content: [
-            { type: 'theory', text: 'Read and write from permanent storage using input and output file streams.' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'cpp_m14',
-      title: 'Concurrency & Threads',
-      xpReward: 300,
-      lessons: [
-        {
-          id: 'cpp_m14_l1',
-          title: 'Parallel C++',
-          duration: '25 min',
-          content: [
-            { type: 'theory', text: 'Utilize multi-core processors with std::thread and mutexes for synchronization.' }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'cpp_m15',
-      title: 'Capstone: Operating System Basics',
-      xpReward: 600,
-      lessons: [
-        {
-          id: 'cpp_m15_l1',
-          title: 'Memory Management Project',
-          duration: '60 min',
-          content: [
-            { type: 'project', title: 'Virtual Memory Simulator', description: 'Build a C++ program that simulates memory paging and allocation logic.', features: ['Simulate least-recently-used (LRU) paging', 'Implement a custom heap memory allocator', 'Handle concurrent memory requests', 'Visualize memory fragmentation stats'] }
-          ]
-        }
-      ]
-    }
+    { id: 'cpp_m4', title: '4: Functions', xpReward: 120, lessons: [{ id: 'cpp_m4_l1', title: 'Modular Logic', content: [{ type: 'theory', text: 'Break code into reusable functions.' }, { type: 'code', language: 'cpp', code: 'int add(int a, int b) { return a + b; }' }, { type: 'practice', title: 'C++ Functions', problems: ['Write a function for factorial.', 'Check if a number is prime.'] }] }] },
+    { id: 'cpp_m5', title: '5: Arrays & Vectors', xpReward: 150, lessons: [{ id: 'cpp_m5_l1', title: 'Sequence Containers', content: [{ type: 'theory', text: 'Vectors are dynamic arrays that grow automatically.' }, { type: 'code', language: 'cpp', code: '#include <vector>\nvector<int> v = {1, 2, 3};\nv.push_back(4);' }] }] },
+    { id: 'cpp_m6', title: '6: Pointers Basics', xpReward: 200, lessons: [{ id: 'cpp_m6_l1', title: 'Addresses & Magic', content: [{ type: 'theory', text: 'Pointers store the memory address of another variable.' }, { type: 'code', language: 'cpp', code: 'int x = 10; int* p = &x;' }] }] },
+    { id: 'cpp_m7', title: '7: References', xpReward: 150, lessons: [{ id: 'cpp_m7_l1', title: 'Alias Logic', content: [{ type: 'theory', text: 'References are aliases for existing variables, often used in function params.' }] }] },
+    { id: 'cpp_m8', title: '8: OOP Foundations', xpReward: 200, lessons: [{ id: 'cpp_m8_l1', title: 'Classes & Objects', content: [{ type: 'theory', text: 'Encapsulate data and behavior into classes.' }, { type: 'code', language: 'cpp', code: 'class Robot { public: void speak(); };' }] }] },
+    { id: 'cpp_m9', title: '9: Inheritance', xpReward: 200, lessons: [{ id: 'cpp_m9_l1', title: 'Hierarchies', content: [{ type: 'theory', text: 'Reuse code by creating child classes.' }] }] },
+    { id: 'cpp_m10', title: '10: Polymorphism', xpReward: 250, lessons: [{ id: 'cpp_m10_l1', title: 'Virtual Functions', content: [{ type: 'theory', text: 'Determine behavior at runtime using virtual functions.' }] }] },
+    { id: 'cpp_m11', title: '11: Memory Management', xpReward: 300, lessons: [{ id: 'cpp_m11_l1', title: 'Heap vs Stack', content: [{ type: 'theory', text: 'Manual memory management using new and delete.' }] }] },
+    { id: 'cpp_m12', title: '12: STL Algorithms', xpReward: 250, lessons: [{ id: 'cpp_m12_l1', title: 'Sorting & Searching', content: [{ type: 'theory', text: 'Master the Standard Template Library algorithms.' }] }] },
+    { id: 'cpp_m13', title: '13: Templates', xpReward: 250, lessons: [{ id: 'cpp_m13_l1', title: 'Generic Code', content: [{ type: 'theory', text: 'Write once, work with any type.' }] }] },
+    { id: 'cpp_m14', title: '14: File I/O', xpReward: 180, lessons: [{ id: 'cpp_m14_l1', title: 'Persistent Data', content: [{ type: 'theory', text: 'Read/write to files using fstream.' }] }] },
+    { id: 'cpp_m15', title: '15: OS Simulation', xpReward: 500, lessons: [{ id: 'cpp_m15_l1', title: 'Systems Capstone', content: [{ type: 'project', title: 'Disk Manager', description: 'Simulate a basic file system allocation logic.', features: ['Contiguous allocation sim', 'Index allocation sim', 'User terminal interface', 'Fragmentation stats dashboard'] }] }] }
   ]
 };

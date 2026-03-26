@@ -1,19 +1,30 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Card from '../components/ui/Card';
-import { Trophy, Target, Zap, LayoutDashboard, Flame, BookOpen } from 'lucide-react';
+import { Trophy, Target, Zap, LayoutDashboard, Flame, BookOpen, ChevronRight, Award, Star, Code, CheckCircle } from 'lucide-react';
+import { ALL_BADGES } from '../data/badges';
 import { getProgress } from '../utils/progressManager';
+import { getXP, getLevelName } from '../utils/xpManager';
 
 const DOMAINS = [
-  { key: 'dsa',      label: 'DSA',              color: '#4f9cf9' },
-  { key: 'ml',       label: 'ML',               color: '#a855f7' },
-  { key: 'webdev',   label: 'Web Dev',           color: '#22c55e' },
-  { key: 'dbms',     label: 'DBMS',              color: '#f97316' },
-  { key: 'os',       label: 'OS',               color: '#ef4444' },
-  { key: 'networks', label: 'Networks',          color: '#06b6d4' },
+  { key: 'dsa', label: 'DSA', color: '#4f9cf9' },
+  { key: 'ml', label: 'ML', color: '#a855f7' },
+  { key: 'webdev', label: 'Web Dev', color: '#22c55e' },
+  { key: 'dbms', label: 'DBMS', color: '#f97316' },
+  { key: 'os', label: 'OS', color: '#ef4444' },
+  { key: 'networks', label: 'Networks', color: '#06b6d4' },
 ];
+
+const PATHS = [
+  { id: 'python', icon: '🐍', color: '#3b82f6', title: 'Python', prefix: 'py_' },
+  { id: 'javascript', icon: '⚡', color: '#f59e0b', title: 'JavaScript', prefix: 'js_' },
+  { id: 'cpp', icon: '⚙️', color: '#6366f1', title: 'C++', prefix: 'cpp_' },
+  { id: 'webdev', icon: '🌐', color: '#10b981', title: 'Web Dev', prefix: 'web_' },
+  { id: 'dsa', icon: '🏆', color: '#f87171', title: 'DSA Master', prefix: 'dsa_' },
+];
+
 
 const Profile = () => {
   const { user } = useAuth();
@@ -33,150 +44,310 @@ const Profile = () => {
     );
   }
 
-  const progress = getProgress(user.email);
-  const totalAssessments = progress.totalAssessments || 0;
-  const streak = progress.streak || 0;
+  const assessmentProgress = getProgress(user.email);
+  const xpData = getXP(user.email);
+  const { totalXP, level, earnedBadges, completedLessons } = xpData;
 
-  // Compute per-domain progress
+  const totalAssessments = assessmentProgress.totalAssessments || 0;
+  const streak = assessmentProgress.streak || 0;
+
+  // Compute per-domain assessment progress
   const domainStats = DOMAINS.map(d => {
-    const dp = progress[d.key] || { currentLevel: 1, unlockedLevels: [1], scores: {} };
+    const dp = assessmentProgress[d.key] || { currentLevel: 1, unlockedLevels: [1], scores: {} };
     const levelsPassed = Object.values(dp.scores || {}).filter(s => s.passed).length;
     const scores = Object.values(dp.scores || {});
     const avgScore = scores.length ? Math.round(scores.reduce((acc, s) => acc + s.percent, 0) / scores.length) : 0;
     return { ...d, levelsPassed, avgScore, currentLevel: dp.currentLevel };
   });
 
-  // Top domain
-  const topDomain = [...domainStats].sort((a, b) => b.avgScore - a.avgScore)[0];
+  // Calculate Learn Path Progress
+  const pathStats = PATHS.map(p => {
+    const completedCount = completedLessons.filter(l => l.startsWith(p.prefix)).length;
+    return { ...p, completedCount };
+  });
 
-  // Total levels passed across all domains
+  const topDomain = [...domainStats].sort((a, b) => b.avgScore - a.avgScore)[0];
   const totalLevelsPassed = domainStats.reduce((acc, d) => acc + d.levelsPassed, 0);
 
   const metrics = [
-    { icon: <Target />, label: 'Assessments Taken', value: totalAssessments || '0' },
-    { icon: <Trophy className="text-yellow-400" />, label: 'Levels Passed', value: `${totalLevelsPassed} / 60` },
-    { icon: <Zap />, label: 'Top Domain', value: topDomain.avgScore > 0 ? topDomain.label : '—' },
-    { icon: <Flame className="text-orange-400" />, label: 'Day Streak', value: streak > 0 ? `${streak} 🔥` : '0' },
+    { icon: <Target />, label: 'Assessments', value: totalAssessments },
+    { icon: <Trophy className="text-yellow-400" />, label: 'Levels Fixed', value: `${totalLevelsPassed}/60` },
+    { icon: <Zap className="text-accent-blue" />, label: 'Energy Level', value: `${totalXP} XP` },
+    { icon: <Flame className="text-orange-400" />, label: 'Streak', value: streak > 0 ? `${streak} 🔥` : '0' },
   ];
 
   const handleDownloadPDF = () => {
     const lines = domainStats.map(d =>
-      `${d.label.padEnd(16)} Levels Passed: ${d.levelsPassed}/10  Avg Score: ${d.avgScore}%`
+      `${d.label.padEnd(16)} Levels: ${d.levelsPassed}/10  Avg: ${d.avgScore}%`
     ).join('\n');
-    const reportContent = `SKILLMIRROR DIAGNOSTIC REPORT
-==============================
-Student: ${user?.name || 'Student'}
-Email:   ${user?.email || ''}
-Date:    ${new Date().toLocaleDateString()}
-
-ASSESSMENT SUMMARY
-------------------
-Total Assessments:  ${totalAssessments}
-Total Levels Passed: ${totalLevelsPassed} / 60
-Day Streak:         ${streak}
-
-DOMAIN BREAKDOWN
-----------------
-${lines}
-
-Generated by SkillMirror — AI Student Performance Evaluator
-Creator: Jaanvi Chouhan | github.com/Jaanvichouhan34
-`;
+    const reportContent = `SKILLMIRROR PERFORMANCE REPORT\n==============================\nStudent: ${user.name}\nEmail: ${user.email}\nXP: ${totalXP} | Level: ${level}\n\nASSESSMENT DATA\n----------------\n${lines}\n\nLEARNING DATA\n-------------\n${pathStats.map(p => `${p.title.padEnd(16)} Lessons: ${p.completedCount}`).join('\n')}\n\nGenerated by SkillMirror`;
     const blob = new Blob([reportContent], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `SkillMirror_Report_${(user?.name || 'Student').replace(/\s+/g, '_')}.txt`;
-    document.body.appendChild(a);
+    a.download = `SkillMirror_Report_${user.name.replace(/\s+/g, '_')}.txt`;
     a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
   };
 
+  const [showAllBadges, setShowAllBadges] = React.useState(false);
+  const totalBadges = ALL_BADGES.length;
+  const earnedCount = earnedBadges.length;
+
   return (
-    <div className="container mx-auto px-6 py-20 flex flex-col gap-12">
+    <div className="container mx-auto px-6 py-24 flex flex-col gap-16">
 
       {/* Header */}
-      <section className="flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
-        <div className="w-32 h-32 rounded-full bg-gradient-main flex items-center justify-center text-5xl font-syne font-extrabold text-white shadow-glow">
+      <section className="flex flex-col md:flex-row items-center gap-10 text-center md:text-left bg-surface/30 p-10 rounded-3xl border border-white/5 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-accent-blue/5 blur-3xl rounded-full -mr-32 -mt-32" />
+        <div className="w-40 h-40 rounded-[2.5rem] bg-gradient-main flex items-center justify-center text-6xl font-syne font-black text-white shadow-glow rotate-3 hover:rotate-0 transition-transform duration-500">
           {user.initials}
         </div>
-        <div className="space-y-2">
-          <h1 className="text-4xl md:text-5xl font-syne capitalize">{user.name}</h1>
-          <p className="text-text-secondary text-lg">{user.email}</p>
-          <div className="flex gap-4 items-center justify-center md:justify-start">
-            <span className="text-sm font-bold text-accent-blue bg-accent-blue/10 px-3 py-1 rounded-full uppercase tracking-tighter">Pro Member</span>
-            <span className="text-sm text-text-secondary">Joined Jan 2026</span>
+        <div className="space-y-4 relative z-10">
+          <div className="flex flex-wrap items-center gap-3 justify-center md:justify-start">
+            <h1 className="text-5xl md:text-6xl font-syne font-black tracking-tight capitalize">{user.name}</h1>
+            <span className="px-4 py-1.5 bg-accent-blue text-white text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg self-center">
+              Level {level} {getLevelName(level)}
+            </span>
+          </div>
+          <p className="text-text-secondary text-xl font-medium">{user.email}</p>
+          <div className="flex gap-4 items-center justify-center md:justify-start pt-2">
+            <div className="flex -space-x-2">
+              {earnedBadges.slice(0, 5).map(b => (
+                <div key={b} className="w-10 h-10 rounded-full bg-surface border-2 border-background flex items-center justify-center text-xl shadow-xl" title={b}>
+                  {ALL_BADGES.find(ab => ab.id === b)?.icon || '🏅'}
+                </div>
+              ))}
+              {earnedBadges.length > 5 && (
+                <div className="w-10 h-10 rounded-full bg-accent-purple border-2 border-background flex items-center justify-center text-[10px] font-black text-white shadow-xl">
+                  +{earnedBadges.length - 5}
+                </div>
+              )}
+            </div>
+            <button 
+              onClick={() => setShowAllBadges(true)}
+              className="text-sm font-bold text-accent-blue hover:text-white bg-accent-blue/10 px-4 py-1.5 rounded-full transition-all border border-accent-blue/20"
+            >
+              View {earnedCount}/{totalBadges} Badges
+            </button>
           </div>
         </div>
       </section>
 
-      {/* Metrics */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Metrics Grid */}
+      <section className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         {metrics.map((m, i) => (
-          <Card key={i} className="p-6 flex flex-col items-center gap-4 text-center">
-            <div className="w-12 h-12 rounded-xl bg-surface border border-card-border flex items-center justify-center text-accent-blue">
+          <Card key={i} className="p-8 flex flex-col items-center gap-4 text-center group hover:bg-accent-blue/5 transition-colors border-white/5">
+            <div className="w-14 h-14 rounded-2xl bg-surface border border-card-border flex items-center justify-center text-accent-blue group-hover:scale-110 transition-transform">
               {m.icon}
             </div>
             <div>
-              <p className="text-text-secondary text-xs font-bold uppercase tracking-widest mb-1">{m.label}</p>
-              <h3 className="text-3xl font-bold">{m.value}</h3>
+              <p className="text-text-secondary text-[10px] font-black uppercase tracking-[0.2em] mb-1">{m.label}</p>
+              <h3 className="text-4xl font-black gradient-text">{m.value}</h3>
             </div>
           </Card>
         ))}
       </section>
 
-      {/* Domain Progress */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Start Assessment CTA */}
-        <Card className="lg:col-span-1 flex flex-col items-center justify-center p-12 text-center gap-6 bg-gradient-to-br from-accent-blue/10 to-accent-purple/10 border-accent-blue/20 overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-accent-blue/10 blur-3xl rounded-full" />
-          <BookOpen size={48} className="text-accent-blue" />
-          <div>
-            <h3 className="text-2xl font-bold mb-2">Assessment Engine</h3>
-            <p className="text-text-secondary text-sm">6 domains · 10 levels each · 10 questions per level</p>
-          </div>
-          <button
-            onClick={() => navigate('/assessment')}
-            className="w-full py-4 bg-accent-blue text-white font-bold rounded-xl hover:scale-105 transition-transform active:scale-95"
-          >
-            Begin Assessment →
-          </button>
-          <button
-            onClick={handleDownloadPDF}
-            className="w-full py-3 border border-white/20 text-white font-bold rounded-xl hover:bg-white/5 transition-all text-sm"
-          >
-            ⬇ Download Report
-          </button>
-        </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
-        {/* Domain Progress Bars */}
-        <Card className="lg:col-span-2 flex flex-col gap-6 p-10">
-          <div>
-            <h3 className="text-2xl font-bold">Domain Progress</h3>
-            <p className="text-text-secondary text-sm">Levels passed per domain (10 levels each)</p>
+        {/* Assessment Engine Section */}
+        <section className="space-y-6">
+          <div className="flex items-center justify-between px-2">
+            <div>
+              <h3 className="text-2xl font-syne font-black text-white">Assessment Engine</h3>
+              <p className="text-text-secondary text-sm">6 domains · 10 levels · 10 questions each</p>
+            </div>
+            <button onClick={() => navigate('/assessment')} className="p-3 bg-accent-blue/10 text-accent-blue rounded-xl hover:bg-accent-blue hover:text-white transition-all">
+              <ChevronRight size={20} />
+            </button>
           </div>
-          <div className="space-y-6 mt-2">
+
+          <Card className="p-8 space-y-6 bg-surface/20 border-white/5">
             {domainStats.map((d, i) => (
               <div key={d.key} className="space-y-2 cursor-pointer group" onClick={() => navigate(`/assessment/levels/${d.key}`)}>
-                <div className="flex justify-between text-sm font-bold">
-                  <span className="group-hover:text-white transition-colors">{d.label}</span>
-                  <span style={{ color: d.color }}>{d.levelsPassed}/10 levels · {d.avgScore}% avg</span>
+                <div className="flex justify-between text-xs font-black uppercase tracking-widest">
+                  <span className="group-hover:text-white transition-colors flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: d.color }} />
+                    {d.label}
+                  </span>
+                  <span className="text-text-secondary">{d.levelsPassed}/10 Levels • {d.avgScore}%</span>
                 </div>
-                <div className="h-3 bg-white/5 rounded-full overflow-hidden">
+                <div className="h-2.5 bg-white/5 rounded-full overflow-hidden border border-white/5">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${d.levelsPassed * 10}%` }}
                     transition={{ duration: 1, delay: i * 0.1 }}
                     className="h-full rounded-full"
-                    style={{ background: d.color }}
+                    style={{ background: d.color, boxShadow: `0 0 10px ${d.color}40` }}
                   />
                 </div>
               </div>
             ))}
+            <div className="pt-4 flex gap-4">
+              <button onClick={() => navigate('/assessment')} className="flex-1 py-4 bg-accent-blue text-white font-black text-xs uppercase tracking-widest rounded-xl hover:shadow-glow transition-all">
+                Continue Diagnostic
+              </button>
+              <button onClick={handleDownloadPDF} className="px-6 py-4 border border-white/10 text-white font-black text-xs uppercase tracking-widest rounded-xl hover:bg-white/5 transition-all">
+                <Trophy size={16} />
+              </button>
+            </div>
+          </Card>
+        </section>
+
+        {/* Learn Paths Section */}
+        <section className="space-y-6">
+          <div className="flex items-center justify-between px-2">
+            <div>
+              <h3 className="text-2xl font-syne font-black text-white">Learn Paths</h3>
+              <p className="text-text-secondary text-sm">Track your progress in curriculum tracks</p>
+            </div>
+            <button onClick={() => navigate('/learn')} className="p-3 bg-accent-purple/10 text-accent-purple rounded-xl hover:bg-accent-purple hover:text-white transition-all">
+              <ChevronRight size={20} />
+            </button>
           </div>
-        </Card>
+
+          <Card className="p-8 space-y-8 bg-surface/20 border-white/5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {pathStats.map((p, i) => (
+                <div
+                  key={p.id}
+                  onClick={() => navigate(`/learn/${p.id}`)}
+                  className="p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-accent-purple/30 transition-all cursor-pointer group relative overflow-hidden"
+                >
+                  <div className="absolute top-0 right-0 w-16 h-16 opacity-10 blur-xl group-hover:opacity-30 transition-opacity" style={{ backgroundColor: p.color }} />
+                  <div className="flex items-center gap-4 relative z-10">
+                    <div className="w-12 h-12 rounded-xl bg-surface flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                      {p.icon}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-sm text-white mb-1">{p.title}</h4>
+                      <p className="text-[10px] font-black uppercase text-text-secondary tracking-widest">
+                        {p.completedCount} Lessons
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <Link
+              to="/learn"
+              className="w-full py-5 bg-gradient-to-r from-accent-blue to-accent-purple text-white font-black text-xs uppercase tracking-[0.2em] rounded-xl flex items-center justify-center gap-3 hover:shadow-glow transition-all"
+            >
+              Master New Skills <ChevronRight size={18} />
+            </Link>
+          </Card>
+        </section>
+
       </div>
+
+      {/* Badge Showcase - Preview */}
+      <section className="space-y-8">
+        <div className="px-2 flex items-center justify-between">
+          <div>
+            <h3 className="text-2xl font-syne font-black text-white">Achievement Showcase</h3>
+            <p className="text-text-secondary text-sm">Badges earned through consistency and excellence</p>
+          </div>
+          <button 
+            onClick={() => setShowAllBadges(true)}
+            className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs font-black uppercase tracking-widest text-text-secondary hover:text-white hover:bg-white/10 transition-all"
+          >
+            View All Badges <ChevronRight size={14} />
+          </button>
+        </div>
+        <Card className="p-10 bg-surface/20 border-white/5 relative overflow-hidden group">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 relative z-10">
+            {ALL_BADGES.slice(0, 12).map((badge) => {
+              const isEarned = earnedBadges.includes(badge.id);
+              return (
+                <div
+                  key={badge.id}
+                  className={`flex flex-col items-center text-center p-5 rounded-2xl border transition-all duration-500 group/badge relative ${isEarned ? 'bg-accent-blue/5 border-accent-blue/30 scale-100' : 'bg-surface/20 border-white/5 opacity-40 grayscale blur-[1px]'}`}
+                >
+                  {isEarned && <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent-blue rounded-full shadow-[0_0_10px_#4f9cf9]" />}
+                  <div className={`w-14 h-14 rounded-full flex items-center justify-center text-3xl mb-3 transition-transform duration-500 ${isEarned ? 'bg-accent-blue/10 group-hover/badge:scale-110' : 'bg-white/5'}`}>
+                    {badge.icon}
+                  </div>
+                  <h5 className="font-bold text-[11px] text-white leading-tight mb-1">{badge.name}</h5>
+                  <p className="text-[8px] font-black text-text-secondary uppercase tracking-widest leading-none">
+                    {badge.desc}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+          {totalBadges > 12 && (
+             <div className="absolute inset-0 bg-gradient-to-t from-[#04050a] via-transparent to-transparent flex items-end justify-center pb-8 opacity-0 group-hover:opacity-100 transition-opacity">
+               <button onClick={() => setShowAllBadges(true)} className="px-8 py-3 bg-accent-blue text-white rounded-xl font-black text-xs uppercase tracking-widest shadow-glow">
+                 See All {totalBadges} Achievements
+               </button>
+             </div>
+          )}
+        </Card>
+      </section>
+
+      {/* Full Badge Modal */}
+      <AnimatePresence>
+        {showAllBadges && (
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowAllBadges(false)}
+              className="absolute inset-0 bg-[#04050a]/90 backdrop-blur-xl"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="w-full max-w-5xl bg-surface/50 border border-white/10 rounded-[2.5rem] p-8 md:p-12 relative z-10 max-h-[90vh] overflow-y-auto shadow-2xl glass-card"
+            >
+              <div className="flex items-center justify-between mb-12">
+                <div className="space-y-2">
+                  <h2 className="text-4xl md:text-5xl font-syne font-black text-white">Achievement Gallery</h2>
+                  <p className="text-text-secondary font-medium">You have unlocked {earnedCount} out of {totalBadges} total badges</p>
+                </div>
+                <button 
+                  onClick={() => setShowAllBadges(false)}
+                  className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-all"
+                >
+                  <ChevronRight size={24} className="rotate-90" />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                {ALL_BADGES.map((badge) => {
+                  const isEarned = earnedBadges.includes(badge.id);
+                  return (
+                    <div
+                      key={badge.id}
+                      className={`flex flex-col items-center text-center p-6 rounded-3xl border transition-all duration-500 relative ${isEarned ? 'bg-white/5 border-white/10 shadow-lg' : 'bg-surface/20 border-white/5 opacity-50 grayscale'}`}
+                    >
+                      <div className={`w-20 h-20 rounded-2xl flex items-center justify-center text-4xl mb-4 ${isEarned ? 'bg-gradient-main shadow-glow' : 'bg-white/5'}`}>
+                        {badge.icon}
+                      </div>
+                      <h5 className="font-bold text-sm text-white mb-2">{badge.name}</h5>
+                      <p className="text-[10px] font-black tracking-widest uppercase text-text-secondary leading-tight min-h-[2.5em]">
+                        {badge.desc}
+                      </p>
+                      {!isEarned && (
+                        <div className="mt-4 px-3 py-1 bg-white/5 rounded-full border border-white/5 text-[9px] font-black text-text-secondary uppercase tracking-widest flex items-center gap-1.5">
+                          <Target size={10} /> Locked
+                        </div>
+                      )}
+                      {isEarned && (
+                        <div className="mt-4 px-3 py-1 bg-accent-green/10 rounded-full border border-accent-green/20 text-[9px] font-black text-accent-green uppercase tracking-widest flex items-center gap-1.5">
+                          <CheckCircle size={10} /> Unlocked
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

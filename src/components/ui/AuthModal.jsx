@@ -59,7 +59,7 @@ const AuthModal = ({ type, onClose, onSwitch }) => {
         exit={{ scale: 0.9, opacity: 0, y: 20 }}
         className="relative w-full max-w-md glass-card p-8 border-accent-blue/20"
       >
-        <button onClick={onClose} className="absolute top-4 right-4 text-text-secondary hover:text-white transition-colors">
+        <button onClick={onClose} className="absolute top-4 right-4 text-text-secondary hover:text-text-primary transition-colors">
           <X size={24} />
         </button>
 
@@ -79,7 +79,7 @@ const AuthModal = ({ type, onClose, onSwitch }) => {
                 <input
                   type="text"
                   placeholder="John Doe"
-                  className={`w-full bg-surface/40 border ${errors.name ? 'border-red-500' : 'border-card-border'} rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-accent-blue transition-colors`}
+                  className={`w-full bg-surface/40 border ${errors.name ? 'border-red-500' : 'border-card-border'} rounded-xl py-3 pl-12 pr-4 text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:border-accent-blue transition-colors`}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
@@ -95,7 +95,7 @@ const AuthModal = ({ type, onClose, onSwitch }) => {
               <input
                 type="email"
                 placeholder="you@example.com"
-                className={`w-full bg-surface/40 border ${errors.email ? 'border-red-500' : 'border-card-border'} rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-accent-blue transition-colors`}
+                className={`w-full bg-surface/40 border ${errors.email ? 'border-red-500' : 'border-card-border'} rounded-xl py-3 pl-12 pr-4 text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:border-accent-blue transition-colors`}
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               />
@@ -110,14 +110,14 @@ const AuthModal = ({ type, onClose, onSwitch }) => {
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="••••••••"
-                className={`w-full bg-surface/40 border ${errors.password ? 'border-red-500' : 'border-card-border'} rounded-xl py-3 pl-12 pr-12 text-white focus:outline-none focus:border-accent-blue transition-colors`}
+                className={`w-full bg-surface/40 border ${errors.password ? 'border-red-500' : 'border-card-border'} rounded-xl py-3 pl-12 pr-12 text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:border-accent-blue transition-colors`}
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary hover:text-white"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary hover:text-text-primary"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -133,7 +133,7 @@ const AuthModal = ({ type, onClose, onSwitch }) => {
                 <input
                   type="password"
                   placeholder="••••••••"
-                  className={`w-full bg-surface/40 border ${errors.confirmPassword ? 'border-red-500' : 'border-card-border'} rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-accent-blue transition-colors`}
+                  className={`w-full bg-surface/40 border ${errors.confirmPassword ? 'border-red-500' : 'border-card-border'} rounded-xl py-3 pl-12 pr-4 text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:border-accent-blue transition-colors`}
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                 />

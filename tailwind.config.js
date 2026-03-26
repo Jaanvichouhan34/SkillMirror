@@ -8,18 +8,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        'app-bg': "#04050a",
-        surface: "#0d1220",
-        card: "#111827",
-        'card-border': "rgba(99,179,237,0.12)",
+        'app-bg': "rgb(var(--bg-color) / <alpha-value>)",
+        background: "rgb(var(--bg-color) / <alpha-value>)",
+        surface: "rgb(var(--bg-surface) / <alpha-value>)",
+        card: "rgb(var(--bg-card) / <alpha-value>)",
+        'card-border': "rgb(var(--border-color) / <alpha-value>)",
         accent: {
           blue: "#4f9cf9",
           purple: "#a78bfa",
           green: "#34d399",
         },
         text: {
-          primary: "#e8edf5",
-          secondary: "#8fa3bf",
+          primary: "rgb(var(--text-primary) / <alpha-value>)",
+          secondary: "rgb(var(--text-secondary) / <alpha-value>)",
         }
       },
       fontFamily: {

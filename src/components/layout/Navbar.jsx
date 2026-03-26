@@ -72,7 +72,7 @@ const Navbar = ({ onOpenAuth }) => {
             {/* Music Button */}
             <button 
               onClick={toggleMusic}
-              className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${isPlaying ? 'bg-accent-green/20 text-accent-green shadow-[0_0_10px_rgba(52,211,153,0.3)]' : 'bg-surface/40 text-text-secondary hover:bg-surface/60'}`}
+              className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${isPlaying ? 'bg-accent-green/20 text-accent-green shadow-[0_0_10px_rgba(52,211,153,0.3)]' : 'bg-surface/60 text-text-secondary hover:bg-surface/80 border border-card-border'}`}
             >
               <div className="flex items-end gap-0.5 h-4">
                 {[1, 2, 3].map(i => (
@@ -132,16 +132,16 @@ const Navbar = ({ onOpenAuth }) => {
                       <Link 
                         to="/profile" 
                         onClick={() => setProfileDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2 hover:bg-white/10 rounded-lg text-sm transition-colors"
-                      >
-                        <User size={16} /> My Profile
-                      </Link>
-                      <button 
-                        onClick={handleLogout} 
-                        className="w-full flex items-center gap-3 px-4 py-2 hover:bg-red-500/10 rounded-lg text-sm transition-colors text-red-400"
-                      >
-                        <LogOut size={16} /> Sign Out
-                      </button>
+                      className="flex items-center gap-3 px-4 py-2 hover:bg-text-primary/10 rounded-lg text-sm transition-colors"
+                    >
+                      <User size={16} /> My Profile
+                    </Link>
+                    <button 
+                      onClick={handleLogout} 
+                      className="w-full flex items-center gap-3 px-4 py-2 hover:bg-red-500/10 rounded-lg text-sm transition-colors text-red-500"
+                    >
+                      <LogOut size={16} /> Sign Out
+                    </button>
                     </motion.div>
                   </>
                 )}
@@ -151,7 +151,7 @@ const Navbar = ({ onOpenAuth }) => {
             <div className="flex items-center gap-4">
               <button 
                 onClick={() => onOpenAuth('signin')}
-                className="text-sm font-medium text-text-secondary hover:text-white transition-colors"
+                className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
               >
                 Sign In
               </button>

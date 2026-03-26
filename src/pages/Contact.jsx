@@ -147,7 +147,7 @@ const Contact = () => {
                       required
                       type="text"
                       placeholder="Your Name"
-                      className="w-full bg-surface/40 border border-card-border rounded-xl py-3 px-4 focus:outline-none focus:border-accent-blue transition-colors"
+                      className="w-full bg-surface/40 border border-card-border rounded-xl py-3 px-4 focus:outline-none focus:border-accent-blue transition-colors placeholder:text-text-secondary/50 text-text-primary"
                       value={formData.name}
                       onChange={e => setFormData({ ...formData, name: e.target.value })}
                     />
@@ -158,7 +158,7 @@ const Contact = () => {
                       required
                       type="email"
                       placeholder="Your Email"
-                      className="w-full bg-surface/40 border border-card-border rounded-xl py-3 px-4 focus:outline-none focus:border-accent-blue transition-colors"
+                      className="w-full bg-surface/40 border border-card-border rounded-xl py-3 px-4 focus:outline-none focus:border-accent-blue transition-colors placeholder:text-text-secondary/50 text-text-primary"
                       value={formData.email}
                       onChange={e => setFormData({ ...formData, email: e.target.value })}
                     />
@@ -170,7 +170,7 @@ const Contact = () => {
                     required
                     type="text"
                     placeholder="What is this about?"
-                    className="w-full bg-surface/40 border border-card-border rounded-xl py-3 px-4 focus:outline-none focus:border-accent-blue transition-colors"
+                    className="w-full bg-surface/40 border border-card-border rounded-xl py-3 px-4 focus:outline-none focus:border-accent-blue transition-colors placeholder:text-text-secondary/50 text-text-primary"
                     value={formData.subject}
                     onChange={e => setFormData({ ...formData, subject: e.target.value })}
                   />
@@ -181,7 +181,7 @@ const Contact = () => {
                     required
                     rows="5"
                     placeholder="Your message..."
-                    className="w-full bg-surface/40 border border-card-border rounded-xl py-3 px-4 focus:outline-none focus:border-accent-blue transition-colors resize-none"
+                    className="w-full bg-surface/40 border border-card-border rounded-xl py-3 px-4 focus:outline-none focus:border-accent-blue transition-colors resize-none placeholder:text-text-secondary/50 text-text-primary"
                     value={formData.message}
                     onChange={e => setFormData({ ...formData, message: e.target.value })}
                   />

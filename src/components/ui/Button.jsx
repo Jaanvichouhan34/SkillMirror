@@ -37,9 +37,9 @@ const Button = ({
 
   const variants = {
     primary: "bg-gradient-main text-white hover:shadow-glow",
-    outline: "border border-card-border text-text-primary hover:bg-white/5",
-    secondary: "bg-surface text-text-secondary hover:text-white border border-card-border",
-    ghost: "text-text-secondary hover:text-white hover:bg-white/5"
+    outline: "border border-card-border text-text-primary hover:bg-text-primary/5",
+    secondary: "bg-surface text-text-secondary hover:text-text-primary border border-card-border",
+    ghost: "text-text-secondary hover:text-text-primary hover:bg-text-primary/5"
   };
 
   return (

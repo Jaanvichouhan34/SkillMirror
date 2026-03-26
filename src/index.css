@@ -4,35 +4,29 @@
 
 @layer base {
   :root {
-    --bg-color: #020617;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --card-bg: rgba(255, 255, 255, 0.05);
+    --bg-color: 2 6 23;      /* #020617 */
+    --bg-surface: 13 18 32;  /* #0d1220 */
+    --bg-card: 17 24 39;     /* #111827 */
+    --text-primary: 248 250 252;
+    --text-secondary: 148 163 184;
+    --text-muted: 100 116 139;
+    --border-color: 30 41 59; /* slate-800 approx */
   }
 
-  /* Light mode using .light class on <html> */
-  .light {
-    --bg-color: #f8fafc;
-    --bg-secondary: #f1f5f9;
-    --bg-card: #ffffff;
-    --text-primary: #0f172a;
-    --text-secondary: #334155;
-    --text-muted: #64748b;
-    --border-color: #cbd5e1;
-    --accent-blue: #2563eb;
-  }
-
-  /* Legacy data-theme support */
-  [data-theme='light'] {
-    --bg-color: #f8fafc;
-    --text-primary: #0f172a;
-    --text-secondary: #334155;
-    --card-bg: #ffffff;
+  .light, [data-theme='light'] {
+    --bg-color: 248 250 252;
+    --bg-surface: 241 245 249;
+    --bg-card: 255 255 255;
+    --text-primary: 15 23 42;
+    --text-secondary: 55 65 81;
+    --text-muted: 107 114 128;
+    --border-color: 203 213 225;
+    --card-bg: 255 255 255;
   }
 
   body {
-    background-color: var(--bg-color);
-    color: var(--text-primary);
+    background-color: rgb(var(--bg-color));
+    color: rgb(var(--text-primary));
     @apply font-inter overflow-x-hidden transition-colors duration-300;
   }
 
@@ -52,7 +46,7 @@
   }
 
   .glass-card {
-    background-color: var(--card-bg);
+    background-color: rgb(var(--bg-card) / 0.05);
     @apply backdrop-blur-lg border border-card-border rounded-2xl transition-all duration-300;
   }
 
@@ -93,13 +87,14 @@
     box-shadow: 0 4px 15px rgba(79, 156, 249, 0.5);
   }
 
-  /* Light mode: tech stack pills always readable */
+  /* Light mode: tech stack pills and other specific components */
   .light .skill-pill,
   .light [class*="tech-pill"],
-  .light .bg-surface\/40.border.border-card-border.text-text-secondary {
-    background: #e2e8f0;
-    color: #1e293b;
-    border-color: #94a3b8;
+  .light .bg-surface,
+  .light .bg-surface\/40 {
+    background-color: rgb(var(--bg-surface));
+    color: rgb(var(--text-primary));
+    border-color: rgb(var(--border-color));
   }
 }
 

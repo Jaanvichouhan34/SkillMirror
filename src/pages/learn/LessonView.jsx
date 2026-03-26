@@ -186,28 +186,101 @@ const LessonView = () => {
     
     setTimeout(() => {
       let result = '';
-      const code = codeState.code.toLowerCase();
+      const code = codeState.code.trim();
+      const codeLower = code.toLowerCase();
       
-      // Basic Analysis
-      if (code.length < 5) {
-        result = '> Alert: Implementation is extremely short. Try adding some logic!';
-      } else if (pathId === 'javascript' || pathId === 'webdev') {
-        try {
-          // Attempt to capture console.log or simple return
-          // This is a very basic sandbox simulation
-          result = `> JavaScript Console:\n> Result: Logic Validated ✨\n> Output: ${code.includes('console.log') ? 'Code Logged Successfully' : 'Function logic accepted!'}`;
-        } catch (e) {
-          result = `> Syntax Error: ${e.message}`;
+      // 1. Syntax Check (Pseudo-linting)
+      const errors = [];
+      if (pathId === 'python') {
+        if ((code.includes('if') || code.includes('for') || code.includes('def')) && !code.includes(':')) {
+          errors.push('> SyntaxError: Missing colon ":" at the end of control statement.');
         }
+      } else if (['cpp', 'javascript', 'java', 'c'].includes(pathId)) {
+        if (!code.includes(';') && !code.includes('}') && code.length > 20) {
+          errors.push('> Warning: Missing semicolon ";" or block termination.');
+        }
+        if (code.includes('if') && !code.includes('(')) {
+          errors.push('> SyntaxError: "if" statement requires parentheses for the condition.');
+        }
+      }
+
+      if (errors.length > 0) {
+        result = `> Starting execution...\n${errors.join('\n')}\n\n> Result: Terminated with errors. ❌`;
       } else {
-        // Keyword-based validation for others
-        const keywords = ['for', 'while', 'if', 'return', 'int', 'def', 'class', 'public', 'static', 'print', 'cout', 'cin'];
-        const found = keywords.filter(k => code.includes(k));
-        
-        if (found.length > 0) {
-          result = `> Execution Successful! 🚀\n> Patterns detected: ${found.join(', ')}\n> Performance: Optimal\n> Time: ${(0.01 + Math.random() * 0.05).toFixed(3)}s\n> Memory: ${(2 + Math.random() * 5).toFixed(1)}MB`;
+        // Detailed Analysis & Simulation
+        if (code.length < 5) {
+          result = '> Alert: Implementation is extremely short. Try adding some logic!';
         } else {
-          result = `> Success: Code executed.\n> Tip: Try using control structures like 'if' or 'for' to solve complex problems.`;
+          // Mock output extraction for common print statements
+          const outputs = [];
+          
+          // JS/Web: console.log("...")
+          const jsMatches = code.match(/console\.log\((.*)\)/g);
+          if (jsMatches) {
+            jsMatches.forEach(m => {
+              const inner = m.substring(12, m.length - 1);
+              try {
+                // Safely handle simple string/number literals
+                const content = inner.replace(/['"`]/g, '');
+                outputs.push(`> ${content}`);
+              } catch(e) { outputs.push(`> [Object Object]`); }
+            });
+          }
+
+          // Python: print("...")
+          const pyMatches = code.match(/print\((.*)\)/g);
+          if (pyMatches) {
+            pyMatches.forEach(m => {
+              const content = m.substring(6, m.length - 1).replace(/['"`]/g, '');
+              outputs.push(`> ${content}`);
+            });
+          }
+
+          // C++/Java: cout << "..." / System.out.println("...")
+          const cppMatches = code.match(/cout\s*<<\s*(.*);/g);
+          if (cppMatches) {
+            cppMatches.forEach(m => {
+              const content = m.split('<<')[1].replace(';', '').trim().replace(/['"`]/g, '');
+              outputs.push(`> ${content}`);
+            });
+          }
+          
+          const javaMatches = code.match(/System\.out\.println\((.*)\)/g);
+          if (javaMatches) {
+            javaMatches.forEach(m => {
+              const content = m.substring(19, m.length - 1).replace(/['"`]/g, '');
+              outputs.push(`> ${content}`);
+            });
+          }
+
+          if (outputs.length > 0) {
+            result = `> Starting execution...\n${outputs.join('\n')}\n\n> Execution Finished Successfully. ✅`;
+          } else {
+            // Keyword-based patterns if no print found
+            const patterns = {
+              js: ['const', 'let', 'function', '=>', 'arrow', 'document', 'window'],
+              py: ['def', 'import', 'in', 'range', 'self', 'class'],
+              cpp: ['int', 'std', 'vector', 'main', 'include'],
+              java: ['public', 'class', 'static', 'void', 'String'],
+              logic: ['for', 'while', 'if', 'else', 'return', 'break', 'continue']
+            };
+
+            const foundPatterns = [];
+            Object.entries(patterns).forEach(([lang, keys]) => {
+              const found = keys.filter(k => {
+                const regex = new RegExp(`\\b${k}\\b`, 'i');
+                return regex.test(code);
+              });
+              if (found.length > 0) foundPatterns.push(...found);
+            });
+
+            if (foundPatterns.length > 0) {
+              const uniquePatterns = [...new Set(foundPatterns)];
+              result = `> Logic Analysis: Validated ✨\n> Patterns detected: ${uniquePatterns.join(', ')}\n> Status: Processed with 0 errors.\n> Performance: ${Math.random() < 0.5 ? 'Optimal' : 'Standard'}\n\n> Tip: Add print statements to see direct output!`;
+            } else {
+              result = `> Running code...\n> Error: No executable logic or output commands detected.\n> Tip: Use output commands (like console.log or print) to see results here!`;
+            }
+          }
         }
       }
 

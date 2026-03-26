@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
 import { getXP, getLevelName } from '../../utils/xpManager';
 import Card from '../../components/ui/Card';
-import { BookOpen, Clock, BarChart, ChevronRight, Trophy, Star, Zap } from 'lucide-react';
+import { BookOpen, Clock, BarChart, ChevronRight, Trophy, Star, Zap, Plus } from 'lucide-react';
+import { ALL_BADGES } from '../../data/badges';
 
 const PATHS = [
   {
@@ -97,16 +98,6 @@ const PATHS = [
   }
 ];
 
-const ALL_BADGES = [
-  { id: 'curious_mind', icon: '🌱', name: 'Curious Mind', desc: 'Complete 10 lessons' },
-  { id: 'dedicated_learner', icon: '📖', name: 'Dedicated Learner', desc: 'Complete 50 lessons' },
-  { id: 'xp_master', icon: '⚡', name: 'XP Master', desc: 'Earn 1000 XP' },
-  { id: 'elite_coder', icon: '👑', name: 'Elite Coder', desc: 'Earn 5000 XP' },
-  { id: 'python_master', icon: '🐍', name: 'Python Master', desc: 'Complete Python path' },
-  { id: 'js_ninja', icon: '⚡', name: 'JS Ninja', desc: 'Complete JavaScript path' },
-  { id: 'dsa_champion', icon: '🏆', name: 'DSA Champion', desc: 'Complete all DSA levels' },
-  { id: 'on_fire', icon: '🔥', name: 'On Fire', desc: '7 day streak' },
-];
 
 const LearnHome = () => {
   const { user } = useAuth();
@@ -198,13 +189,25 @@ const LearnHome = () => {
 
             <div className="flex items-center gap-4">
               <p className="text-[10px] font-black text-text-secondary uppercase tracking-[0.2em]">Badges Earned:</p>
-              <div className="flex gap-2">
+              <div className="flex items-center gap-2">
                 {earnedBadges.length > 0 ? (
-                  earnedBadges.map(badgeId => (
-                    <div key={badgeId} className="w-8 h-8 rounded-lg bg-surface/80 border border-card-border flex items-center justify-center text-lg shadow-sm" title={badgeId}>
-                      {ALL_BADGES.find(b => b.id === badgeId)?.icon || '🏅'}
+                  <>
+                    <div className="flex -space-x-2">
+                      {earnedBadges.slice(0, 3).map(badgeId => (
+                        <div key={badgeId} className="w-9 h-9 rounded-full bg-surface border-2 border-background flex items-center justify-center text-xl shadow-lg ring-1 ring-white/5" title={badgeId}>
+                          {ALL_BADGES.find(b => b.id === badgeId)?.icon || '🏅'}
+                        </div>
+                      ))}
                     </div>
-                  ))
+                    {earnedBadges.length > 3 && (
+                      <button 
+                        onClick={() => navigate('/profile')}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-[10px] font-black text-accent-blue uppercase tracking-widest hover:bg-white/10 transition-all ml-1"
+                      >
+                         <Plus size={10} strokeWidth={4} /> {earnedBadges.length - 3} More
+                      </button>
+                    )}
+                  </>
                 ) : (
                   <span className="text-[10px] font-bold text-text-secondary italic">No badges yet. Start learning to unlock!</span>
                 )}

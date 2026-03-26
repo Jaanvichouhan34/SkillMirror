@@ -29,8 +29,8 @@ const DomainSelect = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {domains.map((domain, i) => {
-          const dp = progress[domain.key];
-          const levelsComplete = Object.values(dp.scores).filter(s => s.passed).length;
+          const dp = progress[domain.key] || { currentLevel: 1, unlockedLevels: [1], scores: {} };
+          const levelsComplete = Object.values(dp.scores || {}).filter(s => s.passed).length;
 
           return (
             <motion.div

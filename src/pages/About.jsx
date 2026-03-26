@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Card from '../components/ui/Card';
 import { Target, Award, Shield, Mail } from 'lucide-react';
-import jaanviPhoto from '../assets/jaanvi.jpg';
+import jaanviPhoto from '/src/assets/jaanvi.jpg';
 
 const About = () => {
   const principles = [
@@ -69,7 +69,7 @@ const About = () => {
 
       {/* Creator Section */}
       <section className="relative p-1 rounded-[3rem] bg-gradient-to-br from-accent-blue/20 to-accent-purple/20">
-        <div className="bg-surface/90 backdrop-blur-xl rounded-[2.9rem] p-12 md:p-20 flex flex-col lg:flex-row gap-16 items-center">
+        <div className="bg-surface rounded-[2.9rem] p-12 md:p-20 flex flex-col lg:flex-row gap-16 items-center border border-card-border shadow-xl">
 
           {/* Photo */}
           <div className="flex-shrink-0">

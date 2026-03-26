@@ -153,7 +153,7 @@ const Home = () => {
 
           <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-4 mt-12 opacity-70">
             {['React ⚛', 'Python 🐍', 'Flask ⚗', 'ML ∑', 'Tailwind 💨'].map(tech => (
-              <span key={tech} className="px-3 py-1 rounded-lg bg-surface/40 border border-card-border text-xs font-bold text-text-secondary">{tech}</span>
+              <span key={tech} className="px-3 py-1 rounded-lg bg-surface border border-card-border text-xs font-bold text-text-secondary">{tech}</span>
             ))}
           </motion.div>
         </motion.div>
