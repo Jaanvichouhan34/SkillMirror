@@ -2,7 +2,9 @@
 
 **SkillMirror** is an AI-powered Student Performance Evaluator designed to bridge the gap between perceived competence and actual technical performance. Built with a focus on precision diagnostics, it helps students identify conceptual blind spots and prepare for placement season with data-driven insights.
 
-![SkillMirror Preview](https://github.com/Jaanvichouhan34/SkillMirror/raw/main/public/preview.png) *(Note: Add a real preview image to your public folder!)*
+[**🚀 Live Demo**](https://skill-mirror-gray.vercel.app)
+
+![SkillMirror Preview](https://github.com/Jaanvichouhan34/SkillMirror/raw/main/public/preview.png)
 
 ## 🚀 Key Features
 
