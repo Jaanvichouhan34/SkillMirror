@@ -128,22 +128,7 @@ text
 - **Developers**: Showcase modern React + Tailwind portfolio project
 - **Teams**: Internal skill assessment & training platform
 
----
 
-## 👨‍💻 Project Structure
-SkillMirror/
-├── src/
-│ ├── components/layout/ # Navbar, Footer, Layout
-│ ├── pages/assessment/ # Quiz system
-│ ├── pages/learn/ # Learning paths
-│ ├── context/ # Theme, Auth, Music
-│ ├── data/ # Questions + Learning content
-│ └── utils/ # Progress & XP managers
-├── public/ # Assets & Preview images
-├── tailwind.config.js # Custom theme config
-└── package.json # Dependencies
-
-text
 
 ---
 
