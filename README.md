@@ -4,7 +4,9 @@
 
 <br/>
 
+<!-- 
 [![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-SkillMirror-a78bfa?style=for-the-badge)](https://skill-mirror-gray.vercel.app)
+-->
 [![License](https://img.shields.io/badge/License-MIT-34d399?style=for-the-badge)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/Jaanvichouhan34/SkillMirror?style=for-the-badge&color=f472b6)](https://github.com/Jaanvichouhan34/SkillMirror/stargazers)
 
